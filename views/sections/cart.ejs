@@ -1,0 +1,149 @@
+﻿<br><br>
+<!-- Start Bradcaump area 
+        <div class="ht__bradcaump__area bg-image--3">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="bradcaump__inner text-center">
+
+
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        End Bradcaump area -->
+        <!-- cart-main-area start -->
+        <div class="cart-main-area section-padding--lg bg--white">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 ol-lg-12">
+                    <center><div class="alert alert-info">
+                        <strong>Nota!</strong> Para usar nuestros servicios de delivery,es necesario tener 6 o mas articulos en la canasta
+                    </div></center>
+                        <form action="#">               
+                            <div class="table-content wnro__table table-responsive">
+                                <table>
+                                    <thead>
+                                        <tr class="title-top">
+                                            <th class="product-thumbnail">Imagen</th>
+                                            <th class="product-name">Producto</th>
+                                            <th class="product-price">Precio</th>
+                                            <th class="product-quantity">Cantidad</th>
+                                            <th class="product-subtotal">Total</th>
+                                            <th class="product-remove">Remover</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <%
+                                        var subtotal = 0;
+                                        var i = -1;
+                                        var cantidad_articulos = 0;
+                                        var cantidad_maxima;
+                                        for(var j=0;j<carrito.length;j++){
+                                            i++;
+                                            subtotal = (carrito[j].Precio*carrito[j].Cantidad) + subtotal;
+                                            cantidad_articulos = cantidad_articulos + parseInt(carrito[j].Cantidad);
+                                            for(var k=0;k<articulos.length;k++){
+                                                if (articulos[k].Nombre == carrito[j].Nombre){
+                                                    cantidad_maxima = articulos[k].Cantidad;
+                                                    break;
+                                                }
+                                            }
+
+                                            %>
+                                        <tr> 
+                                            <td class="product-thumbnail"><a href="Producto?articulo=<%= carrito[j].Nombre %>"><img src="images/articulos/<%= carrito[j].Nombre %>1.jpg" alt="product img"></a></td>
+                                            <td class="product-name"><a href="Producto?articulo=<%= carrito[j].Nombre %>"><%= carrito[j].Nombre %></a></td>
+                                            <td class="product-price"><span class="amount">$<%= (carrito[j].Precio).toFixed(2) %></span></td>
+                                            <td class="product-quantity"><input type="number" onKeyDown="return false" name="cantidad" value="<%= carrito[j].Cantidad %>" min="1" max ="<%= cantidad_maxima %>">
+                                            <a href="#" name="boton" onclick="Redirect('<%= carrito[j].Nombre %>','<%= i %>'); return false">🔄</a>
+                                            <center><div class="spinner-border spinner-border-sm  text-primary" name="spinner"></div></center>
+                                            </td>
+                                            <td class="product-subtotal">$<%= (carrito[j].Precio*carrito[j].Cantidad).toFixed(2) %></td>
+                                            <td class="product-remove"><a href="EliminardelCarrito?articulo=<%= carrito[j].Nombre %> " onclick="eliminarBotonX('<%= i %>')" name="remover" >X</a>
+                                            <center><div class="spinner-border spinner-border-sm  text-primary" name="spinner_remover"></div></center>
+                                            </td>
+                                        </tr>
+                                        <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form> 
+                        <div class="cartbox__btn">
+                            <ul class="cart__btn__list d-flex flex-wrap flex-md-nowrap flex-lg-nowrap justify-content-between">
+                                <% if (carrito.length == 0){ %>
+                                    
+                               <% }else{ %>
+                                <li></li>
+                                <% if (cantidad_articulos >= 6) {%>
+                                <li><a href="checkout">Tramitar Pedido</a></li>
+                               <% } %>
+                               <% } %>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <% if (carrito.length == 0){ %>
+                <center><h2 class="title__be--2">Tu carrito esta vacio! <span class="color--theme"></span></h2></center>
+                <% }
+                else{ %>
+                <div class="row">
+                    <div class="col-lg-6 offset-lg-6">
+                        <div class="cartbox__total__area">
+                            <div class="cartbox-total d-flex justify-content-between">
+                                <ul class="cart__total__list">
+                                    <li>Total de Compra</li>
+                                    <li>Delivery</li>
+                                </ul>
+                                <ul class="cart__total__tk">
+                                    <li>$<%= subtotal.toFixed(2) %></li>
+                                    <li>$4.50</li>
+                                </ul>
+                            </div>
+                            <div class="cart__total__amount">
+                                <span>Total a Pagar</span>
+                                <span>$<%= (subtotal+4.50).toFixed(2) %></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+            </div>  
+        </div>
+    </div>
+    <!-- //Main wrapper -->
+
+    <script>
+        window.onload = ocultarSpinner();
+        
+        function ocultarSpinner() {
+            for(var Posicion=0;Posicion<=<%= i %>;Posicion++){
+                var x = document.getElementsByName("spinner")[Posicion];
+                var y = document.getElementsByName("spinner_remover")[Posicion];
+                x.style.display = "none";
+                y.style.display = "none";
+            }
+        }
+        function Redirect(Nombre,Posicion){
+            mostrarSpinner(Posicion);
+            var cantidad = document.getElementsByName("cantidad")[Posicion].value;
+            location.href = 'ActualizarCarrito?Nombre='+Nombre+'&Cantidad='+cantidad;
+        }
+        function mostrarSpinner(Posicion){
+            var x = document.getElementsByName("boton")[Posicion];
+            x.style.display = "none";
+            var z = document.getElementsByName("cantidad")[Posicion];
+            z.style.display = "none";
+            var y = document.getElementsByName("spinner")[Posicion];
+            y.style.display = "block";
+
+        }
+        function eliminarBotonX(Posicion){
+            var x = document.getElementsByName("remover")[Posicion];
+            x.style.display = "none";
+            var y = document.getElementsByName("spinner_remover")[Posicion];
+            y.style.display = "block";
+        }
+    </script>

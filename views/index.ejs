@@ -1,0 +1,91 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>MercaDelivery</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Favicons -->
+        <link rel="shortcut icon" href="images/icons/cartIcon.png">
+        <link rel="apple-touch-icon" href="images/icon.png">
+
+        <!-- Google font (font-family: 'Roboto', sans-serif; Poppins ; Satisfy) -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,500,600,600i,700,700i,800" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet"> 
+
+        <!-- Stylesheets -->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/plugins.css">
+        <link rel="stylesheet" href="css/style.css">
+
+        <!-- Cusom css -->
+        <link rel="stylesheet" href="css/custom.css">
+
+        <!-- Modernizer js -->
+        <!-- <script src="js/vendor/modernizr-3.5.0.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="javascript.js"></script> -->
+    </head>
+    <body>
+        <%- include sections/header %>
+        <% switch(pagina) {
+      case 1: %>
+    <%- include sections/start %>
+    <% break %>
+    <%  case 2: %>
+    <%- include sections/contacto  %>
+    <% break  %>
+    <% case 3: %>
+    <%- include sections/catalogo  %>
+    <% break  %>
+    <% case 4: %>
+    <%- include sections/producto  %>
+    <% break  %>
+    <% case 5: %>
+    <%- include sections/cart  %>
+    <% break  %>
+    <% case 6: %>
+    <%- include sections/checkout  %>
+    <% break  %>
+    <% case 7: %>
+    <%- include sections/login  %>
+    <% break  %>
+    <% case 8: %>
+    <%- include sections/register  %>
+    <% break  %>
+    <% case 9: %>
+    <%- include sections/agregado  %>
+    <% break  %>
+    <% case 10: %>
+    <%- include sections/terminado  %>
+    <% break  %>
+    <% case 11: %>
+    <%- include sections/ordenes  %>
+    <% break  %>
+    <% case 12: %>
+    <%- include sections/orden_especifico  %>
+    <% break  %>
+    <% case 13: %>
+    <%- include sections/cuenta  %>
+    <% break  %>
+    <% case 404: %>
+    <%- include sections/404  %>
+    <% break  }%>
+    <% if (pagina!=11 && pagina!=12){ %>
+    <%- include sections/footer %> 
+    <% } %>
+    <!-- JS Files -->
+    <script src="js/vendor/jquery-3.2.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/plugins.js"></script>
+    <script src="js/active.js"></script>
+
+</body>
+</html>

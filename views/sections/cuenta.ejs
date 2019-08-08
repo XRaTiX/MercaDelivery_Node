@@ -1,0 +1,77 @@
+﻿            <!-- Start My Account Area -->
+            <section class="my_account_area pt--80 pb--55 bg--white">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6 col-12">
+                            <div class="my__account__wrapper">
+                            <br>
+                            <% if (direccion_agregada){ %>
+                                 <div class="alert alert-info">
+                                    <strong>Cuenta actualizada!</strong>
+                                 </div>
+                        <% } %>
+                                 <h3>Mi cuenta</h3>
+                            <form action="ActualizarDetallesUsuario" method="POST" id = "form" >
+                            <div class="customar__field">
+                                <div class="margin_between">
+                                    <div class="input_box space_between">
+                                        <label>Nombre <span>*</span></label>
+                                        <input type="text" name="Nombre" value="<%=usuario[0].Nombre %>" required>
+                                    </div>
+                                    <div class="input_box space_between">
+                                        <label>Apellido <span>*</span></label>
+                                        <input type="text" name="Apellido" value= "<%=usuario[0].Apellido %>"required>
+                                    </div>
+                                </div>
+                                <div class="input_box">
+                                    <label>Direccion <span>*</span></label>
+                                    <input type="text" name="Direccion" value= "<%=usuario[0].Direccion %>"required>
+                                </div>
+                                <div class="input_box">
+                                    <label>Barriada <span>*</span></label>
+                                    <input type="text" name="Barriada" value= "<%=usuario[0].Barriada %>"required>
+                                </div>
+                                <div class="margin_between">
+                                    <div class="input_box space_between">
+                                        <label>Telefono <span>*</span></label>
+                                        <input type="text" name="Telefono" value= "<%=usuario[0].Telefono %>"required>
+                                    </div>
+
+                                    <div class="input_box space_between">
+                                        <label>Correo electronico  <span>*</span></label>
+                                        <input type="email" name="correo" value ="<%= correo %>"required>
+                                    </div>
+                                    <input type="hidden" value="cuenta" name="Pagina">
+                                </div>
+                                <button type="button" class="btn btn-success" onclick="Enviar()" id="boton_enviar" >Guardar</button>
+                                <button class="btn btn-success" id="spinner">
+                                    <span class="spinner-border spinner-border-sm"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+    <script>
+        window.onload = ocultarSpinner();
+
+        function ocultarSpinner(){
+            var x = document.getElementById("spinner");
+            x.style.display = "none";
+        }
+
+        function Enviar(){
+            var x = document.getElementById("spinner");
+            x.style.display = "block";
+            var y = document.getElementById("boton_enviar");
+            y.style.display = "none";
+            document.getElementById("form").submit();
+        }
+        function Redirect(){
+            location.href = 'register';
+        }
+    </script>

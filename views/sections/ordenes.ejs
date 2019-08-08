@@ -1,0 +1,102 @@
+﻿<link rel="stylesheet" type="text/css" href="css/ordenes.css">
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+        
+<div class="container">
+            <div class="row">
+                <section class="content">
+                <br><br>
+                    <h1>Mis Ordenes</h1>
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="pull-right">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-success btn-filter" data-target="Entregado">Entregado</button>
+                                        <button type="button" class="btn btn-primary btn-filter" data-target="En_camino">En camino</button>
+                                        <button type="button" class="btn btn-default btn-filter" data-target="all">Todos</button>
+                                    </div>
+                                </div>
+                                    <div class="table-container">
+                                        <table class="table table-filter">
+                                            <tbody>
+                                                <%
+                                                if (ordenes.length == 0){
+
+                                                }else{ 
+                                                var numero = 1;
+                                                for(var i=0;i<ordenes.length;i++){
+                                                    if(ordenes[i].Numero == numero){ 
+                                                    numero = numero+1;%>
+                                                <tr data-status=<%= ordenes[i].Estado %>>
+                                                    <td>
+                                                    </td>
+                                                    <td>
+                                                    </td>
+                                                    <td>
+                                                        <div class="media">
+                                                            <a href="#" class="pull-left">
+                                                                <!--<img src="https://s3.amazonaws.com/uifaces/faces/twitter/fffabs/128.jpg" class="media-photo"> -->
+                                                            </a>
+                                                            <div class="media-body">
+                                                                <span class="media-meta pull-right"><%= ordenes[i].Fecha %></span>
+                                                                <h4 class="title">
+                                                                    <a href="orden_especifico?Numero=<%= ordenes[i].Numero %>"><font color="black">Pedido #<%= ordenes[i].Numero %></font></a>
+                                                                    <span class="pull-right <%= ordenes[i].Estado %>">
+                                                                    <% if (ordenes[i].Estado == 'En_camino'){ %>
+                                                                    En camino</span>
+                                                                    <% } else { %> 
+                                                                    <%= ordenes[i].Estado %></span>
+                                                                    <% } %>
+                                                                </h4>
+                                                                <p class="summary">Click en el nombre para ver mas detalles</p>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                           <% } } }%>
+                                       </div>
+        </div>
+
+
+
+<script>
+$(document).ready(function () {
+
+    $('.star').on('click', function () {
+      $(this).toggleClass('star-checked');
+    });
+
+    $('.ckbox label').on('click', function () {
+      $(this).parents('tr').toggleClass('selected');
+    });
+
+    $('.btn-filter').on('click', function () {
+      var $target = $(this).data('target');
+      if ($target != 'all') {
+        $('.table tr').css('display', 'none');
+        $('.table tr[data-status="' + $target + '"]').fadeIn('slow');
+      } else {
+        $('.table tr').css('display', 'none').fadeIn('slow');
+      }
+    });
+    
+   //$(".table-filter tbody tr").click(function(){
+   //     alert("Text: " + $("input[name='lol']").val() );
+       //window.location = "";
+   //});
+
+ });
+
+
+</script>
+        <footer class="bg__cat--8 brown--color">
+                <div>
+                    </div>
+                </div>
+                <div>
+                    <div class="container">
+                    </div>
+                </div>
+            </footer>

@@ -1,0 +1,47 @@
+﻿            <!-- Start My Account Area -->
+            <section class="my_account_area pt--80 pb--55 bg--white">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6 col-12">
+                            <div class="my__account__wrapper">
+                                <h3 class="account__title">Crear una Cuenta</h3>
+                                <% if (error){ %>
+                                <br>
+                                   <div class="alert alert-danger">
+                                         <strong>Esta cuenta ya existe</strong> Inicie Sesion
+                                    </div>
+                            <% } %>
+                                <form action="proceso-registro" method="POST">
+                                    <div class="account__form">
+                                        <div class="input__box">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                                <input type="text" class="form-control" name="email" placeholder="Email" required>
+                                            </div>
+                                        </div>
+                                        <div class="input__box">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                                <input type="password" class="form-control" placeholder="Contraseña" name="pass" id="pass" required>
+                                            </div>
+                                        <input type="hidden" name="tipo" id="tipo" value="Cliente">
+                                        </div>
+                                        <div class="form__btn">
+                                            <input type="submit" class="btn btn-primary" value="Registrarse">
+                                        </div>
+                                    </div>
+                                </form>
+                                <h4>Ya tienes cuenta?</h4>
+                                <button class="btn btn-primary" onclick="Redirect()">Ingresar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- End My Account Area -->
+
+  <script>
+        function Redirect(){
+            location.href = 'login';
+        }
+    </script>

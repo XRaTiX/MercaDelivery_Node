@@ -1,0 +1,127 @@
+﻿<!-- Start main Content -->
+            <div class="maincontent bg--white pt--80 pb--55">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-9 col-12">
+                            <div class="wn__single__product">
+                                <div class="row">
+                                    <div class="col-lg-6 col-12">
+                                        <div class="wn__fotorama__wrapper">
+                                            <div class="fotorama wn__fotorama__action" data-nav="thumbs">
+                                            <!-- Se muestra la imagen del articulo,el href no sirve asique dejalo asi xd -->
+                                            <!-- articulo ya no es un arreglo,en el node se separo para que no se tuviera que recorrer por todos los articulos (ya que se sabe cual se clickeo) -->
+                                                <a href="1.jpg"><img src="/images/articulos/<%= articulo.Nombre %>1.jpg" alt=""></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-12">
+                                        <div class="product__info__main">
+                                            <h1><%= articulo.Nombre %></h1>
+                                            <div class="s-price-box">
+                                            <span class="new-price">$<%= (articulo.Precio).toFixed(2) %></span>
+                                            <% if (articulo.Precio_Viejo) { %>
+                                            <span class="old-price">$<%= (articulo.Precio_Viejo).toFixed(2) %></span>
+                                            <% } %>
+                                        </div>
+                                            <div class="product__overview">
+                                                <p>
+                                                    <%= articulo.Descripcion %>
+                                                </p>
+
+                                            </div>
+                                            <div class="box-tocart d-flex">
+                                                <span>Cantidad</span>
+                                                <select class="input-text qty" id="cantidad">
+                                                        <% for(var i=1;i<=articulo.Cantidad;i++){ %>
+                                                        <option value="<%= i %>"><%= i %></option> 
+                                                        <% } %>
+                                                </select>
+                                                <div class="addtocart__actions">
+                                                <!-- Si el articulo esta agotado,el boton se deshabilita y tiene mensaje de agotado -->
+                                                    <% if (articulo.Cantidad == 0) { %>
+                                                        <button class="tocart" type="submit" title="No disponible" disabled>Agotado</button>
+                                                    <% } else if (!logueado) { %>
+                                                    <!-- Si el usuario no esta logueado,el boton se cambia por "Iniciar sesion" -->
+                                                        <button class="tocart" type="submit" onclick="RedirectLogin()" title="Iniciar Sesion Primero">Inicia sesion primero</button>
+                                                    <% } else { %>
+                                                    <!-- Este es el mensaje de loading "agregando",cuando se carga la pagina se oculta automaticamente-->
+                                                    <button class="tocart" id="boton_agregando" disabled>
+                                                    <span class="spinner-border spinner-border-sm"></span>Agregando...</button>
+                                                    <!-- Boton de añadir carrito,cuando se apreta se va para la funcion Redirect() -->
+                                                        <button class="tocart" type="submit" id="boton_añadir" title="Añadir al carrito" onclick="Redirect()" >Añadir al carrito</button>
+                                                    <% } %>
+                                                </div>
+                                            </div>
+                                            <div class="product_meta">
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product__info__detailed">
+                                <div class="pro_details_nav nav justify-content-start" role="tablist">
+                                    <a class="nav-item nav-link active" data-toggle="tab" href="#nav-details" role="tab">Detalles</a>
+                                </div>
+                                <div class="tab__container">
+                                    <!-- Start Single Tab Content -->
+                                    <div class="pro__tab_label tab-pane fade show active" id="nav-details" role="tabpanel">
+                                        <div class="description__attribute">
+                                            <%= articulo.Detalles %>
+                                        </div>
+                                    </div>
+                                    <!-- End Single Tab Content -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-12 md-mt-40 sm-mt-40">
+                            <div class="shop__sidebar">
+                                <aside class="wedget__categories poroduct--cat">
+                                    <h3 class="wedget__title">Catalogo</h3>
+                                    <ul>
+                                    <% for (var i=0;i<categoria.length;i++){%>
+                                      <li><a href="Catalogo?categoria=<%= categoria[i].Nombre %>"><%= categoria[i].Nombre %></a></li>
+                                      <% } %>
+                                    </ul>
+                                </aside>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End main Content -->
+        </div>
+        <!-- //Main wrapper -->
+
+        <script>
+        <!-- Ocultar el boton loading al cargar la pagina -->
+        window.onload = ocultarBotonAgregado();
+
+        <!-- Cuanto tiene en el input de cantidad -->
+        function getCantidad() {
+        return document.getElementById("cantidad").value;
+        }
+        <!-- Si el usuario no esta logueado y apreta el boton iniciar sesion,se redirige al login ->
+        function RedirectLogin(){
+        location.href = "Login";         
+         
+        }
+        <!-- Oculta el boton de añadir al carrito y luego se redirigue a la funcion node de agregar al carrito -->
+        function Redirect() {
+        ocultarBotonAñadir();
+        location.href = "AgregarAlCarrito?articulo=<%= articulo.Nombre %>&cantidad=" + getCantidad() + "&precio=" + <%= articulo.Precio %>;
+        }
+
+        function ocultarBotonAgregado() {
+            var x = document.getElementById("boton_agregando");
+            x.style.display = "none";
+        }
+
+        <!-- Ocultar el boton de añadir carrito y luego mostrar el boton de loading -->
+        function ocultarBotonAñadir() {
+            var x = document.getElementById("boton_añadir");
+            var y = document.getElementById("boton_agregando");
+            x.style.display = "none";
+            y.style.display = "block";
+        }
+    </script> 

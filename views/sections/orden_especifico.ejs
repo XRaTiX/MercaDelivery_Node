@@ -1,0 +1,74 @@
+<br> <br><br>
+<div class="cart-main-area section-padding--lg bg--white">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 ol-lg-12">
+                        <form action="#">               
+                            <div class="table-content wnro__table table-responsive">
+                                <table>
+                                    <thead>
+                                        <tr class="title-top">
+                                            <th class="product-thumbnail">Imagen</th>
+                                            <th class="product-name">Producto</th>
+                                            <th class="product-price">Precio</th>
+                                            <th class="product-quantity">Cantidad</th>
+                                            <th class="product-subtotal">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <%
+                                        var subtotal = 0;
+                                        var orden;
+                                        for(var j=0;j<ordenes.length;j++){
+                                        if (ordenes[j].Numero == numero){
+                                            orden = j
+                                            subtotal = (ordenes[j].Precio*ordenes[j].Cantidad) + subtotal; %>
+                                        <tr> 
+                                            <td class="product-thumbnail"><a href="Producto?articulo=<%= ordenes[j].Nombre %>"><img src="images/articulos/<%= ordenes[j].Nombre %>1.jpg" alt="product img"></a></td>
+                                            <td class="product-name"><a href="Producto?articulo=<%= ordenes[j].Nombre %>"><%= ordenes[j].Nombre %></a></td>
+                                            <td class="product-price"><span class="amount">$<%= (ordenes[j].Precio).toFixed(2) %></span></td>
+                                            <td class="product-price"><span><strong><%= ordenes[j].Cantidad %></span></td>
+                                            </td>
+                                            <td class="product-subtotal">$<%= (ordenes[j].Precio*ordenes[j].Cantidad).toFixed(2) %></td>
+                                        </tr>
+                                        <% } }%>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form> 
+                        
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 offset-lg-6">
+                        <div class="cartbox__total__area">
+                            <div class="cartbox-total d-flex justify-content-between">
+                                <ul class="cart__total__list">
+                                    <li>Total de Compra</li>
+                                    <li>Delivery</li>
+                                </ul>
+                                <ul class="cart__total__tk">
+                                    <li>$<%= subtotal.toFixed(2) %></li>
+                                    <li>$4.50</li>
+                                </ul>
+                            </div>
+                            <div class="cart__total__amount">
+                                <span>Pagaste </span>
+                                <span>$<%= (subtotal+4.50).toFixed(2) %></span>
+                            </div>
+                            <div class="orden_delivered">
+                                <span>Entregado el </span>
+                                 <% if (ordenes[orden].Estado == 'En_camino'){ %>
+                                  <span><i>En camino</i></span>
+                                  <% } else { %> 
+                                   <span><%= ordenes[orden].Fecha%></span>
+                                   <% } %>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="Ordenes" class="btn btn-light btn-lg">Regresar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+  

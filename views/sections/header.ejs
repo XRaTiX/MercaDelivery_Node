@@ -1,0 +1,198 @@
+ <!-- Main wrapper -->
+        <div class="wrapper" id="wrapper">
+            <!-- Header -->
+            <header id="wn__header" class="header__area header__absolute sticky__header">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-6 col-lg-2">
+                            <div class="logo">
+                                <a href="/">
+                                    <img src="images/logo/MercaDeliveryTransparente.png" alt="logo images">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-8 d-none d-lg-block">
+                            <nav class="mainmenu__nav">
+                                <ul class="meninmenu d-flex justify-content-start">
+                                    <li class="drop with--one--item"><a href="/">Home</a></li>
+                                    <li class="drop"><a>Catalogo</a>
+                                        <div class="megamenu mega03">
+                                            <ul class="item item03">
+                                                <% for (var i=0;i<categoria.length;i++){%>
+                                                <li><a href="Catalogo?categoria=<%= categoria[i].Nombre %>"><%= categoria[i].Nombre %></a></li>
+                                                <% } %>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li><a href="Contacto">Contacto</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-6 col-lg-2">
+                    <ul class="header__sidebar__right d-flex justify-content-end align-items-center">
+                        <!-- <li class="shop_search"><a class="search__active" href="#"></a></li> -->
+                        <% if (!logueado) { %>
+                            <li class="shopcart"><a class="cartbox_active" href="#"><span class="product_qun">0</span></a>
+                                <!-- Start Shopping Cart -->
+                                <div class="block-minicart minicart__active">
+                                    <div class="minicart-content-wrapper">
+                                        <div class="micart__close">
+                                            <span>Cerrar</span>
+                                        </div>
+                                        <div class="items-total d-flex justify-content-between">
+
+                                        </div>
+                                        <div class="total_amount text-right">
+                                            <span></span>
+                                        </div>
+                                        <div class="mini_action checkout">
+                                            <a class="checkout__btn" href="Login">Inicia Sesion para ver tu canasta!</a>
+                                        </div>
+                                        <li class="setting__bar__icon"><a class="setting__active" href="#"></a>
+                                            <div class="searchbar__content setting__block">
+                                                
+                                            </div>
+                                        </li>
+                                    </div>
+                            <%} else { %>
+                                <%    if (carrito.length == 0) { %>
+                                <li class="shopcart"><a class="cartbox_active" href="#"><span class="product_qun">0</span></a>
+                                <% } else { %>
+                                <li class="shopcart"><a class="cartbox_active" href="#"><span class="product_qun"><%= carrito.length %></span></a>
+                                <% } %>
+                                <!-- Start Shopping Cart -->
+                                <div class="block-minicart minicart__active">
+                                    <div class="minicart-content-wrapper">
+                                        <div class="micart__close">
+                                            <span>Cerrar</span>
+                                        </div>
+                                        <div class="items-total d-flex justify-content-between">
+                                            <span>Productos: <%= carrito.length %></span>
+                                            <span>Subtotal</span>
+                                        </div>
+                                        <div class="total_amount text-right">
+                                            <span>
+                                            <% var subtotal = 0;
+                                            for(var i=0;i<carrito.length;i++){
+                                                var precio;
+                                                var cantidad;
+                                                precio = carrito[i].Precio;
+                                                cantidad = carrito[i].Cantidad;
+                                                subtotal = (precio*cantidad) + subtotal;
+                                            }
+                                            %>$<%= subtotal.toFixed(2) %></span>
+                                        </div>
+                                        <div class="mini_action checkout">
+                                            <% if (carrito.length > 0) { %>
+                                            <a class="checkout__btn" href="checkout">Ir al Pago</a> 
+                                                <% } else { %>
+                                                <a class="checkout__btn" disabled>Tu canasta esta vacia!</a> 
+                                            <% } %>
+                                        </div>
+                                        <div class="single__items">
+                                            <% for(var i=0;i<carrito.length;i++){ %>
+                                                <div class="miniproduct">
+                                                    <div class="item01 d-flex">
+                                                        <div class="thumb">
+                                                            <a href="Producto?articulo=<%= carrito[i].Nombre %>"><img src="images/articulos/<%= carrito[i].Nombre%>1.jpg" alt="product images"></a>
+                                                        </div>
+                                                        <div class="content">
+                                                            <h6><a href="Producto?articulo=<%= carrito[i].Nombre %>"><%= carrito[i].Nombre %></a></h6>
+                                                            <span class="prize">$<%= (carrito[i].Precio).toFixed(2) %></span>
+                                                            <div class="product_prize d-flex justify-content-between">
+                                                                <span class="qun">Cantidad: <%= carrito[i].Cantidad %></span>
+                                                                <ul class="d-flex justify-content-end">
+        <!--                                                                    <li><a href="#"><i class="zmdi zmdi-settings"></i></a></li>
+                                                                    <li><a href="#"><i class="zmdi zmdi-delete"></i></a></li>-->
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>  
+                                            <% } %>
+                                            <% if (carrito.length > 0){ %>
+                                            <div class="mini_action cart">
+                                                <a class="cart__btn" href="Cart">Ver y Editar Carrito</a>
+                                            </div>
+                                            <% } %>
+                                        
+                                    </div>
+                                </div>
+                                    
+                            </div>
+                                <% } %>
+                            <!-- End Shopping Cart -->
+                                <li class="setting__bar__icon"><a class="setting__active" href="#"></a>
+                                    <div class="searchbar__content setting__block">
+                                        <div class="content-inner">
+                                            <div class="switcher-currency">
+                                                <strong class="label switcher-label">
+                                                    <% if (correo) { %>
+                                                        <%= correo %>
+                                                        <%} else { %>
+                                                        <span>Perfil</span>
+                                                        <% } %>
+                                                </strong>
+                                                <div class="switcher-options">
+                                                    <div class="switcher-currency-trigger">
+                                                        <div class="setting__menu">
+                                                        <% if (logueado){ %>
+                                                            <span><a href="Cuenta">Mi cuenta</a></span>
+                                                            <span><a href="Ordenes">Mis Ordenes</a></span>
+                                                            <span><a href="LogOut">Salir</a></span>
+                                                        <% }else{ %>
+                                                            <span><a href="Login">Iniciar Sesion</a></span>
+                                                            <span><a href="register">Crear una Cuenta</a></span>
+                                                        <% } %>
+                                                            
+                                                           
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Start Mobile Menu -->
+                    <div class="row d-none">
+                        <div class="col-lg-12 d-none">
+                            <nav class="mobilemenu__nav">
+                                <ul class="meninmenu">
+                                    <li><a href="/">Home</a></li>
+                                    <li><a href="#">Catalogo</a>
+                                        <ul>
+                                        <% for (var i=0;i<categoria.length;i++){%>
+                                                <li><a href="Catalogo?categoria=<%= categoria[i].Nombre %>"><%= categoria[i].Nombre %></a></li>
+                                                <% } %>
+                                        </ul>
+                                    </li>
+                                    <li><a href="Contacto">Contact</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    <!-- End Mobile Menu -->
+                    <div class="mobile-menu d-block d-lg-none">
+                    </div>
+                    <!-- Mobile Menu -->	
+                </div>		
+            </header>
+            <!-- //Header -->
+            <!-- Start Search Popup -->
+            <div class="brown--color box-search-content search_active block-bg close__top">
+                <form id="search_mini_form" class="minisearch" action="#">
+                    <div class="field__search">
+                        <input type="text" placeholder="Que quiere buscar?">
+                        <div class="action">
+                            <a href="#"><i class="zmdi zmdi-search"></i></a>
+                        </div>
+                    </div>
+                </form>
+                <div class="close__wrap">
+                    <span>Cerrar</span>
+                </div>
+            </div>
+            <!-- End Search Popup -->
